@@ -10,11 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MessageService {
+public class MessageUserService {
 
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
     public Message postAddMessageInThread(String threadId, String message, String fileId) {
+
+        if (fileId == null)
+            return this.postAddMessageInThread(threadId, message);
+
         return aiService.createMessage(threadId, MessageRequest.builder().content(message).fileIds(List.of(fileId)).build());
     }
 
@@ -24,5 +28,9 @@ public class MessageService {
 
     public OpenAiResponse<Message> getAllMessagesByThread(String threadId) {
         return aiService.listMessages(threadId);
+    }
+
+    private Message postAddMessageInThread(String threadId, String message) {
+        return aiService.createMessage(threadId, MessageRequest.builder().content(message).build());
     }
 }

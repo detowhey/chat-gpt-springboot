@@ -8,7 +8,7 @@ import dev.almeida.henrique.chatgptspringboot.util.Constant;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ThreadService {
+public class ThreadBotService {
 
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
@@ -16,7 +16,7 @@ public class ThreadService {
         return aiService.retrieveThread(threadId);
     }
 
-    public Thread postCreateThread(String message) {
+    public Thread postCreateThread() {
         return aiService.createThread(ThreadRequest.builder().build());
     }
 
