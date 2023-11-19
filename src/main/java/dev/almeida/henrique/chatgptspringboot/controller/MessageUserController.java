@@ -1,6 +1,5 @@
 package dev.almeida.henrique.chatgptspringboot.controller;
 
-import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.messages.Message;
 import dev.almeida.henrique.chatgptspringboot.dto.request.MessageUserRequest;
 import dev.almeida.henrique.chatgptspringboot.service.MessageUserService;
@@ -10,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,7 +44,7 @@ public class MessageUserController {
     }
 
     @GetMapping("/message/{threadId}")
-    public ResponseEntity<OpenAiResponse<Message>> getAllMessageByThread(@PathVariable String threadId) {
+    public ResponseEntity<List<Message>> getAllMessageByThread(@PathVariable String threadId) {
         return ResponseEntity.ok(messageUserService.getAllMessagesByThread(threadId));
     }
 }
