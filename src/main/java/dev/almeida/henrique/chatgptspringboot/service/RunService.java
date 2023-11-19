@@ -1,7 +1,6 @@
 package dev.almeida.henrique.chatgptspringboot.service;
 
 import com.theokanning.openai.ListSearchParameters;
-import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.runs.CreateThreadAndRunRequest;
 import com.theokanning.openai.runs.Run;
 import com.theokanning.openai.runs.RunCreateRequest;
@@ -10,6 +9,8 @@ import com.theokanning.openai.service.OpenAiService;
 import com.theokanning.openai.threads.ThreadRequest;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RunService {
@@ -24,8 +25,8 @@ public class RunService {
         return aiService.retrieveRun(threadId, runId);
     }
 
-    public OpenAiResponse<Run> getAllRuns(String threadId) {
-        return aiService.listRuns(threadId, ListSearchParameters.builder().build());
+    public List<Run> getAllRuns(String threadId) {
+        return aiService.listRuns(threadId, ListSearchParameters.builder().build()).data;
     }
 
     public Run postCancelRun(String threadId, String runId) {
@@ -40,8 +41,8 @@ public class RunService {
         );
     }
 
-    public OpenAiResponse<RunStep> geAllRunSteps(String threadId, String runId) {
-        return aiService.listRunSteps(threadId, runId, ListSearchParameters.builder().build());
+    public List<RunStep> geAllRunSteps(String threadId, String runId) {
+        return aiService.listRunSteps(threadId, runId, ListSearchParameters.builder().build()).data;
     }
 
     public RunStep getRunStepById(String threadId, String runId, String stepId) {

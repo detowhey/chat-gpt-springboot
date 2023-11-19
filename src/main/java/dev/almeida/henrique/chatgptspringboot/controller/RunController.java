@@ -34,7 +34,7 @@ public class RunController {
 
     @GetMapping("/thread/{threadId}/run/{runId}/step")
     public List<RunStep> getAllStepByRun(@PathVariable String threadId, @PathVariable String runId) {
-        return runService.geAllSteps(threadId, runId);
+        return runService.geAllRunSteps(threadId, runId);
     }
 
     @GetMapping("/thread/{threadId}/run/{runId}/step/{stepId}")
