@@ -6,12 +6,13 @@ import dev.almeida.henrique.chatgptspringboot.dto.request.MessageUserRequest;
 import dev.almeida.henrique.chatgptspringboot.service.MessageUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(value = "/api/${api.version}/bot")
+@RequestMapping(value = "/api/${api.version}/bot", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MessageUserController {
 
     private final MessageUserService messageUserService;
@@ -36,12 +37,12 @@ public class MessageUserController {
         return ResponseEntity.created(uri).body(message);
     }
 
-    @GetMapping("/message/${threadId}/${messageId}")
+    @GetMapping("/message/{threadId}/{messageId}")
     public ResponseEntity<Message> getMessageById(@PathVariable String threadId, @PathVariable String messageId) {
         return ResponseEntity.ok(messageUserService.getMessageById(threadId, messageId));
     }
 
-    @GetMapping("/message/${threadId}")
+    @GetMapping("/message/{threadId}")
     public ResponseEntity<OpenAiResponse<Message>> getAllMessageByThread(@PathVariable String threadId) {
         return ResponseEntity.ok(messageUserService.getAllMessagesByThread(threadId));
     }

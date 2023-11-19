@@ -5,6 +5,7 @@ import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.runs.CreateThreadAndRunRequest;
 import com.theokanning.openai.runs.Run;
 import com.theokanning.openai.runs.RunCreateRequest;
+import com.theokanning.openai.runs.RunStep;
 import com.theokanning.openai.service.OpenAiService;
 import com.theokanning.openai.threads.ThreadRequest;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
@@ -15,7 +16,7 @@ public class RunService {
 
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
-    public Run postCreateRunThread(String threadId) {
+    public Run postCreateRun(String threadId) {
         return aiService.createRun(threadId, RunCreateRequest.builder().assistantId(Constant.ASSISTANT_ID).build());
     }
 
@@ -34,7 +35,16 @@ public class RunService {
 
     public Run postCreateThreadAndRun() {
         return aiService.createThreadAndRun(
-                CreateThreadAndRunRequest.builder().assistantId(Constant.ASSISTANT_ID).thread(ThreadRequest.builder().build()).build()
+                CreateThreadAndRunRequest.builder().assistantId(Constant.ASSISTANT_ID)
+                        .thread(ThreadRequest.builder().build()).build()
         );
+    }
+
+    public OpenAiResponse<RunStep> geAllRunSteps(String threadId, String runId) {
+        return aiService.listRunSteps(threadId, runId, ListSearchParameters.builder().build());
+    }
+
+    public RunStep getRunStepById(String threadId, String runId, String stepId) {
+        return aiService.retrieveRunStep(threadId, runId, stepId);
     }
 }
