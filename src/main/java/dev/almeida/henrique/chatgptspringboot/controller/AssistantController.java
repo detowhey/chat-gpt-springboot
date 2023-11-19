@@ -22,7 +22,7 @@ public class AssistantController {
         this.assistantService = assistantService;
     }
 
-    @GetMapping("/assistant/file/{id}")
+    @GetMapping("/assistant/file/{assistantFileId}")
     public ResponseEntity<AssistantFile> getAssistantFileById(@PathVariable String assistantFileId) {
         return ResponseEntity.ok(assistantService.getAssistantFileById(assistantFileId));
     }
@@ -32,7 +32,7 @@ public class AssistantController {
         return ResponseEntity.ok(assistantService.getAllAssistantFiles());
     }
 
-    @GetMapping("/assistant/{id}")
+    @GetMapping("/assistant/{assistantId}")
     public ResponseEntity<Assistant> getAssistantById(@PathVariable String assistantId) {
         return ResponseEntity.ok(assistantService.getAssistantById(assistantId));
     }
