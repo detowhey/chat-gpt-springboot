@@ -4,6 +4,7 @@ import com.theokanning.openai.ListSearchParameters;
 import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.assistants.Assistant;
 import com.theokanning.openai.assistants.AssistantFile;
+import com.theokanning.openai.assistants.AssistantFileRequest;
 import com.theokanning.openai.service.OpenAiService;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
 import org.springframework.stereotype.Service;
@@ -29,4 +30,7 @@ public class AssistantService {
         return aiService.listAssistants(ListSearchParameters.builder().build());
     }
 
+    public AssistantFile postAddFileInTheAssistant(String fileId) {
+        return aiService.createAssistantFile(Constant.ASSISTANT_ID, AssistantFileRequest.builder().fileId(fileId).build());
+    }
 }
