@@ -1,13 +1,14 @@
 package dev.almeida.henrique.chatgptspringboot.service;
 
 import com.theokanning.openai.ListSearchParameters;
-import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.assistants.Assistant;
 import com.theokanning.openai.assistants.AssistantFile;
 import com.theokanning.openai.assistants.AssistantFileRequest;
 import com.theokanning.openai.service.OpenAiService;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AssistantService {
@@ -18,16 +19,16 @@ public class AssistantService {
         return aiService.retrieveAssistantFile(Constant.ASSISTANT_ID, fileId);
     }
 
-    public OpenAiResponse<Assistant> getAllAssistantFiles() {
-        return aiService.listAssistantFiles(Constant.ASSISTANT_ID, ListSearchParameters.builder().build());
+    public List<Assistant> getAllAssistantFiles() {
+        return aiService.listAssistantFiles(Constant.ASSISTANT_ID, ListSearchParameters.builder().build()).data;
     }
 
     public Assistant getAssistantById(String id) {
         return aiService.retrieveAssistant(id);
     }
 
-    public OpenAiResponse<Assistant> getAllAssistants() {
-        return aiService.listAssistants(ListSearchParameters.builder().build());
+    public List<Assistant> getAllAssistants() {
+        return aiService.listAssistants(ListSearchParameters.builder().build()).data;
     }
 
     public AssistantFile postAddFileInTheAssistant(String fileId) {

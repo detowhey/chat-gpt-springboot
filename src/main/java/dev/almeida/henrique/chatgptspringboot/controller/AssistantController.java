@@ -1,6 +1,5 @@
 package dev.almeida.henrique.chatgptspringboot.controller;
 
-import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.assistants.Assistant;
 import com.theokanning.openai.assistants.AssistantFile;
 import dev.almeida.henrique.chatgptspringboot.service.AssistantService;
@@ -10,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot")
@@ -28,7 +29,7 @@ public class AssistantController {
     }
 
     @GetMapping("/assistant/file")
-    public ResponseEntity<OpenAiResponse<Assistant>> getAllAssistantFiles() {
+    public ResponseEntity<List<Assistant>> getAllAssistantFiles() {
         return ResponseEntity.ok(assistantService.getAllAssistantFiles());
     }
 
@@ -38,7 +39,7 @@ public class AssistantController {
     }
 
     @GetMapping("/assistant")
-    public ResponseEntity<OpenAiResponse<Assistant>> getAllAssistants() {
+    public ResponseEntity<List<Assistant>> getAllAssistants() {
         return ResponseEntity.ok(assistantService.getAllAssistants());
     }
 }

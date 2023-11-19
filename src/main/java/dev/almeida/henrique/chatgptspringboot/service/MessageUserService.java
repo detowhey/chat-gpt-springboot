@@ -1,6 +1,5 @@
 package dev.almeida.henrique.chatgptspringboot.service;
 
-import com.theokanning.openai.OpenAiResponse;
 import com.theokanning.openai.messages.Message;
 import com.theokanning.openai.messages.MessageRequest;
 import com.theokanning.openai.service.OpenAiService;
@@ -26,8 +25,8 @@ public class MessageUserService {
         return aiService.retrieveMessage(threadId, messageId);
     }
 
-    public OpenAiResponse<Message> getAllMessagesByThread(String threadId) {
-        return aiService.listMessages(threadId);
+    public List<Message> getAllMessagesByThread(String threadId) {
+        return aiService.listMessages(threadId).data;
     }
 
     private Message postAddMessageInThread(String threadId, String message) {
