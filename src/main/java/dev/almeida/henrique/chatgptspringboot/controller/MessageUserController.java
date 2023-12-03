@@ -23,7 +23,7 @@ public class MessageUserController {
         this.messageUserService = messageUserService;
     }
 
-    @PostMapping("/message/add")
+    @PostMapping("/message/create")
     public ResponseEntity<Message> postAddMessageInThread(@RequestBody @Valid MessageUserRequest messageUserRequest) {
 
         var message = messageUserService.postAddMessageInThread(

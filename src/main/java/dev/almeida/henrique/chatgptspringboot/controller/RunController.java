@@ -27,25 +27,6 @@ public class RunController {
         return ResponseEntity.ok().body(runService.getRunById(threadId, runId));
     }
 
-    @GetMapping("/run/{threadId}")
-    public ResponseEntity<List<Run>> getAllRunsByThreadId(@PathVariable String threadId) {
-        return ResponseEntity.ok().body(runService.getAllRuns(threadId));
-    }
-
-    @GetMapping("/thread/{threadId}/run/{runId}/step")
-    public List<RunStep> getAllStepByRun(@PathVariable String threadId, @PathVariable String runId) {
-        return runService.geAllRunSteps(threadId, runId);
-    }
-
-    @GetMapping("/thread/{threadId}/run/{runId}/step/{stepId}")
-    public ResponseEntity<RunStep> getStepById(
-            @PathVariable String threadId,
-            @PathVariable String runId,
-            @PathVariable String stepId
-    ) {
-        return ResponseEntity.ok().body(runService.getRunStepById(threadId, runId, stepId));
-    }
-
     @PostMapping("/run/{threadId}/create")
     public ResponseEntity<Run> createRun(@PathVariable String threadId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(runService.postCreateRun(threadId));
