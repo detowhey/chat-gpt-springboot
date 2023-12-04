@@ -56,7 +56,9 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
         return createResponseError(HttpStatus.NOT_FOUND, "Not found", exception, request);
     }
 
-    private ResponseEntity<StandardErrorResponse> createResponseError(HttpStatus httpStatus, String error, Exception exception, ServletServerHttpRequest request) {
+    private ResponseEntity<StandardErrorResponse> createResponseError(
+            HttpStatus httpStatus, String error, Exception exception, ServletServerHttpRequest request
+    ) {
         StandardErrorResponse errorResponse = new StandardErrorResponse(
                 Instant.now(),
                 httpStatus.value(),
