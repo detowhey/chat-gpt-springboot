@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Tag(name = "Assistant endpoint", description = "REST service for assistant methods")
+@Tag(name = "Assistant", description = "Assistant methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot")
 public class AssistantController {

@@ -2,7 +2,7 @@ package dev.almeida.henrique.chatgptspringboot.controller;
 
 import com.theokanning.openai.messages.Message;
 import dev.almeida.henrique.chatgptspringboot.dto.request.MessageUserRequest;
-import dev.almeida.henrique.chatgptspringboot.service.MessageUserService;
+import dev.almeida.henrique.chatgptspringboot.service.UserMessageService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,16 +18,16 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
-@Tag(name = "Message User endpoint", description = "REST service for message users methods")
+@Tag(name = "User message", description = "User message methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot", produces = MediaType.APPLICATION_JSON_VALUE)
-public class MessageUserController {
+public class UserMessageController {
 
-    private final MessageUserService messageUserService;
+    private final UserMessageService userMessage;
 
     @Autowired
-    public MessageUserController(MessageUserService messageUserService) {
-        this.messageUserService = messageUserService;
+    public UserMessageController(UserMessageService userMessage) {
+        this.userMessage = userMessage;
     }
 
     @Operation(
@@ -43,7 +43,7 @@ public class MessageUserController {
     @PostMapping("/message/create")
     public ResponseEntity<Message> postAddMessageInThread(@RequestBody @Valid MessageUserRequest messageUserRequest) {
 
-        var message = messageUserService.postAddMessageInThread(
+        var message = userMessage.postAddMessageInThread(
                 messageUserRequest.threadId(), messageUserRequest.message(), messageUserRequest.fileId()
         );
 
@@ -67,7 +67,7 @@ public class MessageUserController {
     )
     @GetMapping("/message/{threadId}/{messageId}")
     public ResponseEntity<Message> getMessageById(@PathVariable String threadId, @PathVariable String messageId) {
-        return ResponseEntity.ok(messageUserService.getMessageById(threadId, messageId));
+        return ResponseEntity.ok(userMessage.getMessageById(threadId, messageId));
     }
 
     @Operation(
@@ -82,6 +82,6 @@ public class MessageUserController {
     )
     @GetMapping("/message/{threadId}")
     public ResponseEntity<List<Message>> getAllMessageByThread(@PathVariable String threadId) {
-        return ResponseEntity.ok(messageUserService.getAllMessagesByThread(threadId));
+        return ResponseEntity.ok(userMessage.getAllMessagesByThread(threadId));
     }
 }

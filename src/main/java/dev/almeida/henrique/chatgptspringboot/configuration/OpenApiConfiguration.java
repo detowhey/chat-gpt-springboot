@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 @OpenAPIDefinition(
         servers = {
-                @Server(url = "/", description = "Chat GPT assistant for combat sports and martial arts")
+                @Server(url = "localhost/:8080", description = "localhost")
         }
 )
 public class OpenApiConfiguration {
@@ -20,7 +20,7 @@ public class OpenApiConfiguration {
     @Bean
     public OpenAPI customOpenApiConfiguration() {
         return new OpenAPI()
-                .info(new Info().title("Chat GPT Assistant for martial arts").version("v1"))
+                .info(new Info().title("Chat GPT Assistant").version("v1"))
                 .servers(List.of(
                         new io.swagger.v3.oas.models.servers.Server().url("http://localhost:8080").url("URL base"))
                 );

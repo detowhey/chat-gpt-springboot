@@ -17,7 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
-@Tag(name = "File endpoint", description = "REST service for file methods")
+@Tag(name = "File", description = "File methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot")
 public class FileController {

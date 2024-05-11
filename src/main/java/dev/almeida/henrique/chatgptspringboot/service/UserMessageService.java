@@ -3,7 +3,6 @@ package dev.almeida.henrique.chatgptspringboot.service;
 import com.theokanning.openai.messages.Message;
 import com.theokanning.openai.messages.MessageRequest;
 import com.theokanning.openai.service.OpenAiService;
-import dev.almeida.henrique.chatgptspringboot.exception.MessaUserNotFoundException;
 import dev.almeida.henrique.chatgptspringboot.exception.ThreadBotNotFoundException;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class MessageUserService {
+public class UserMessageService {
 
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
@@ -37,9 +36,6 @@ public class MessageUserService {
         } catch (RuntimeException exception) {
             log.error(String.format("Not found Thread by ID %s", threadId));
             throw new ThreadBotNotFoundException(threadId);
-        } catch (Exception exception) {
-            log.error(String.format("Not found Message by ID %s", messageId));
-            throw new MessaUserNotFoundException(messageId);
         }
     }
 

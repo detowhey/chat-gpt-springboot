@@ -13,7 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Run endpoint", description = "REST service for run methods")
+@Tag(name = "Run", description = "Run methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot", produces = MediaType.APPLICATION_JSON_VALUE)
 public class RunController {

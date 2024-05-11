@@ -31,7 +31,10 @@ public class AssistantService {
 
     public List<Assistant> getAllAssistantFiles() {
         log.info("Return all file assistant");
-        return aiService.listAssistantFiles(Constant.ASSISTANT_ID, ListSearchParameters.builder().build()).data;
+        return aiService.listAssistantFiles(
+                Constant.ASSISTANT_ID,
+                ListSearchParameters.builder().build()
+        ).data;
     }
 
     public Assistant getAssistantById(String id) {
@@ -50,6 +53,9 @@ public class AssistantService {
     }
 
     public AssistantFile postAddFileInTheAssistant(String fileId) {
-        return aiService.createAssistantFile(Constant.ASSISTANT_ID, AssistantFileRequest.builder().fileId(fileId).build());
+        return aiService.createAssistantFile(
+                Constant.ASSISTANT_ID,
+                AssistantFileRequest.builder().fileId(fileId).build()
+        );
     }
 }
