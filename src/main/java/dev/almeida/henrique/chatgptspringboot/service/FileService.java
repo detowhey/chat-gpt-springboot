@@ -16,7 +16,7 @@ public class FileService {
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
     public File uploadFile(String purpose, String filePath) {
-        log.info(String.format("Upload file with name %s", filePath));
+        log.info("Upload file with name {}", filePath);
         return aiService.uploadFile(purpose, filePath);
     }
 
@@ -27,10 +27,10 @@ public class FileService {
 
     public File getFileById(String fileId) {
         try {
-            log.info(String.format("Search file with ID %s", fileId));
+            log.info("Search file with ID {}", fileId);
             return aiService.retrieveFile(fileId);
         } catch (RuntimeException exception) {
-            log.error(String.format("File not found by ID %s", fileId));
+            log.error("File not found by ID {}", fileId);
             throw new FileNotFoundException(fileId);
         }
     }

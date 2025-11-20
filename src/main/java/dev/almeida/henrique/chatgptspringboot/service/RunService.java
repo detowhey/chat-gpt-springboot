@@ -10,6 +10,7 @@ import com.theokanning.openai.threads.ThreadRequest;
 import dev.almeida.henrique.chatgptspringboot.exception.RunNotFoundException;
 import dev.almeida.henrique.chatgptspringboot.exception.ThreadBotNotFoundException;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -19,32 +20,33 @@ import java.util.List;
 @Service
 public class RunService {
 
+    private static final String CREATE_LOG_MESSAGE = "Crate run with Thread id {}";
+    private static final String SEARCH_RUNS_LOG_MESSAGE = "Search run(s) by Thread id {}";
+    private static final String NOT_FOUND_THREAD_LOG_MESSAGE = "Thread not found by ID {}";
+
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
     public Run postCreateRun(String threadId) {
-        log.info(String.format("Crate run with Thread id %s", threadId));
+        log.info(CREATE_LOG_MESSAGE, threadId);
         return aiService.createRun(threadId, RunCreateRequest.builder().assistantId(Constant.ASSISTANT_ID).build());
     }
 
     public Run getRunById(String threadId, String runId) {
-        try {
-            log.info(String.format("Search run by Thread id %s", threadId));
-            return aiService.retrieveRun(threadId, runId);
-        } catch (RuntimeException exception) {
-            throw new RunNotFoundException(runId);
-        } catch (Exception exception) {
-            throw new ThreadBotNotFoundException(threadId);
-        }
+        return Try.of(() -> {
+                    log.info(SEARCH_RUNS_LOG_MESSAGE, threadId);
+                    return aiService.retrieveRun(threadId, runId);
+                })
+                .onFailure(exception -> log.error(NOT_FOUND_THREAD_LOG_MESSAGE, threadId))
+                .getOrElseThrow(exception -> new RunNotFoundException(runId));
     }
 
     public List<Run> getAllRuns(String threadId) {
-        try {
-            log.info(String.format("Search runs by Thread ID %s", threadId));
-            return aiService.listRuns(threadId, ListSearchParameters.builder().build()).data;
-        } catch (RuntimeException exception) {
-            log.error(String.format("Thread not found by ID %s", threadId));
-            throw new ThreadBotNotFoundException(threadId);
-        }
+        return Try.of(() -> {
+                    log.info(SEARCH_RUNS_LOG_MESSAGE, threadId);
+                    return aiService.listRuns(threadId, ListSearchParameters.builder().build()).data;
+                })
+                .onFailure(exception -> log.error(NOT_FOUND_THREAD_LOG_MESSAGE, threadId))
+                .getOrElseThrow(exception -> new ThreadBotNotFoundException(threadId));
     }
 
     public Run postCancelRun(String threadId, String runId) {
@@ -54,7 +56,9 @@ public class RunService {
 
     public Run postCreateThreadAndRun() {
         return aiService.createThreadAndRun(
-                CreateThreadAndRunRequest.builder().assistantId(Constant.ASSISTANT_ID)
+                CreateThreadAndRunRequest
+                        .builder()
+                        .assistantId(Constant.ASSISTANT_ID)
                         .thread(ThreadRequest.builder().build()).build()
         );
     }

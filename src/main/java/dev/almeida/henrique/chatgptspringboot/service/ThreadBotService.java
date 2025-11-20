@@ -6,6 +6,7 @@ import com.theokanning.openai.threads.Thread;
 import com.theokanning.openai.threads.ThreadRequest;
 import dev.almeida.henrique.chatgptspringboot.exception.ThreadBotNotFoundException;
 import dev.almeida.henrique.chatgptspringboot.util.Constant;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class ThreadBotService {
 
+    private static final String NOT_FOUND_LOG_MESSAGE = "Not found Thread by ID {}";
     private final OpenAiService aiService = new OpenAiService(Constant.OPENAPI_TOKEN);
 
     public Thread getThreadById(String threadId) {
-        try {
-            log.info(String.format("Search Thread by ID %s", threadId));
-            return aiService.retrieveThread(threadId);
-        } catch (RuntimeException exception) {
-            log.error(String.format("Not found Thread by ID %s", threadId));
-            throw new ThreadBotNotFoundException(threadId);
-        }
+        return Try.of(() -> {
+                    log.info("Search Thread by ID {}", threadId);
+                    return aiService.retrieveThread(threadId);
+                })
+                .onFailure(exception -> log.error(NOT_FOUND_LOG_MESSAGE, threadId, exception))
+                .getOrElseThrow(exception -> new ThreadBotNotFoundException(threadId));
     }
 
     public Thread postCreateThread() {
@@ -31,12 +32,11 @@ public class ThreadBotService {
     }
 
     public DeleteResult deleteThread(String threadId) {
-        try {
-            log.info(String.format("Delete Thread with ID %s", threadId));
-            return aiService.deleteThread(threadId);
-        } catch (RuntimeException exception) {
-            log.error(String.format("Not found Thread by ID %s", threadId));
-            throw new ThreadBotNotFoundException(threadId);
-        }
+        return Try.of(() -> {
+                    log.info("Delete Thread with ID {}", threadId);
+                    return aiService.deleteThread(threadId);
+                })
+                .onFailure(exception -> log.error(NOT_FOUND_LOG_MESSAGE, threadId, exception))
+                .getOrElseThrow(exception -> new ThreadBotNotFoundException(threadId));
     }
 }
