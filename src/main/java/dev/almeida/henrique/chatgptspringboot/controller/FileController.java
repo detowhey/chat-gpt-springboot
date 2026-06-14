@@ -17,6 +17,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_200;
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_201;
+
 @Tag(name = "File", description = "File methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot")
@@ -33,7 +36,7 @@ public class FileController {
             summary = "Return all Files",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found all Files",
                             content = @Content(array = @ArraySchema(schema = @Schema(implementation = File.class)))
                     )
@@ -48,7 +51,7 @@ public class FileController {
             summary = "Search File by ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found File by id",
                             content = @Content(schema = @Schema(implementation = File.class))
                     )
@@ -64,7 +67,7 @@ public class FileController {
             summary = "Upload File for OpenAi",
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
+                            responseCode = CODE_201,
                             description = "Successfully upload File",
                             content = @Content(schema = @Schema(implementation = File.class))
                     )

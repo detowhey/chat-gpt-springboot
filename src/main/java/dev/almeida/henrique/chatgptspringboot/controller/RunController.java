@@ -13,6 +13,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_200;
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_201;
+
 @Tag(name = "Run", description = "Run methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,7 +32,7 @@ public class RunController {
             summary = "Search Run by ID and Thread",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found Run by id and Thread",
                             content = @Content(schema = @Schema(implementation = Run.class))
                     )
@@ -44,7 +47,7 @@ public class RunController {
             summary = "Create Run with Thread ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
+                            responseCode = CODE_201,
                             description = "Successfully create Run with Thread",
                             content = @Content(schema = @Schema(implementation = Run.class))
                     )
@@ -59,7 +62,7 @@ public class RunController {
             summary = "Cancel Run with ID and Thread ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully cancel Run by ID with Thread",
                             content = @Content(schema = @Schema(implementation = Run.class))
                     )

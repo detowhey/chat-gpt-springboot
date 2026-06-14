@@ -1,21 +1,22 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version '3.5.6'
+    id 'org.springframework.boot' version '3.5.12'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
 ext {
 	gpt3JavaVersion = '0.18.2'
-	springDocVersion = '2.8.14'
-    vavrVersion = '0.10.7'
+	springDocVersion = '2.8.17'
+    vavrVersion = '0.11.0'
 }
 
 group = 'dev.almeida.henrique'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '21'
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 configurations {
@@ -45,6 +46,6 @@ tasks.named('bootBuildImage') {
     builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }

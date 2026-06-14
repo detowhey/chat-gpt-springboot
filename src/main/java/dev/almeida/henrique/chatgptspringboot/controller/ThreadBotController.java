@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_200;
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_201;
+
 @Tag(name = "Thread", description = "Thread methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,7 +33,7 @@ public class ThreadBotController {
             summary = "Search Thread by ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found Thread by ID",
                             content = @Content(schema = @Schema(implementation = Thread.class))
                     )
@@ -45,7 +48,7 @@ public class ThreadBotController {
             summary = "Create a Thread",
             responses = {
                     @ApiResponse(
-                            responseCode = "201",
+                            responseCode = CODE_201,
                             description = "Successfully create a Thread",
                             content = @Content(schema = @Schema(implementation = Thread.class))
                     )
@@ -60,7 +63,7 @@ public class ThreadBotController {
             summary = "Delete a Thread by ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully delete Thread by ID",
                             content = @Content(schema = @Schema(implementation = Thread.class))
                     )

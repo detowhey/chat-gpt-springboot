@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static dev.almeida.henrique.chatgptspringboot.util.Constant.CODE_200;
+
 @Tag(name = "Assistant", description = "Assistant methods")
 @RestController
 @RequestMapping(value = "/api/${api.version}/bot")
@@ -34,7 +36,7 @@ public class AssistantController {
             summary = "Search File Assistant by ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found File Assistant by id",
                             content = @Content(schema = @Schema(implementation = AssistantFile.class))
                     )
@@ -49,7 +51,7 @@ public class AssistantController {
             summary = "Return all Files Assistant",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found all Files Assistant",
                             content = @Content(array = @ArraySchema(schema = @Schema(implementation = AssistantFile.class)))
                     )
@@ -64,7 +66,7 @@ public class AssistantController {
             summary = "Search Assistant by ID",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found Assistant by id",
                             content = @Content(schema = @Schema(implementation = Assistant.class))
                     )
@@ -79,7 +81,7 @@ public class AssistantController {
             summary = "Return all Assistants",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = CODE_200,
                             description = "Successfully found all Assistants",
                             content = @Content(array = @ArraySchema(schema = @Schema(implementation = Assistant.class)))
                     )

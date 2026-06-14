@@ -9,6 +9,9 @@ import java.util.Properties;
 @Slf4j
 public class PropertiesResource {
 
+    private PropertiesResource() {
+    }
+
     private static final Properties PROPERTIES = new Properties();
 
     private static FileInputStream instanceFileProperty() throws IOException {

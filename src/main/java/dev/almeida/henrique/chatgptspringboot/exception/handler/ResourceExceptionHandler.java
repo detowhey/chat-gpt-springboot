@@ -1,5 +1,6 @@
 package dev.almeida.henrique.chatgptspringboot.exception.handler;
 
+import com.theokanning.openai.OpenAiHttpException;
 import dev.almeida.henrique.chatgptspringboot.exception.*;
 import dev.almeida.henrique.chatgptspringboot.exception.error.StandardErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -16,12 +17,15 @@ import java.time.Instant;
 @RestControllerAdvice
 public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final String NOT_FOUND_MESSAGE = "Not found";
+    private static final String BAD_GATEWAY_MESSAGE = "Bad gateway";
+
     @ExceptionHandler(AssistantNotFoundException.class)
     public ResponseEntity<StandardErrorResponse> assistantNotFound(
             AssistantNotFoundException exception,
             ServletServerHttpRequest request
     ) {
-        return createResponseError(HttpStatus.NOT_FOUND, "Not found", exception, request);
+        return createResponseError(HttpStatus.NOT_FOUND, NOT_FOUND_MESSAGE, exception, request);
     }
 
     @ExceptionHandler(FileNotFoundException.class)
@@ -29,7 +33,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
             FileNotFoundException exception,
             ServletServerHttpRequest request
     ) {
-        return createResponseError(HttpStatus.NOT_FOUND, "Not found", exception, request);
+        return createResponseError(HttpStatus.NOT_FOUND, NOT_FOUND_MESSAGE, exception, request);
     }
 
     @ExceptionHandler(MessaUserNotFoundException.class)
@@ -37,7 +41,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
             MessaUserNotFoundException exception,
             ServletServerHttpRequest request
     ) {
-        return createResponseError(HttpStatus.NOT_FOUND, "Not found", exception, request);
+        return createResponseError(HttpStatus.NOT_FOUND, NOT_FOUND_MESSAGE, exception, request);
     }
 
     @ExceptionHandler(RunNotFoundException.class)
@@ -45,7 +49,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
             RunNotFoundException exception,
             ServletServerHttpRequest request
     ) {
-        return createResponseError(HttpStatus.NOT_FOUND, "Not found", exception, request);
+        return createResponseError(HttpStatus.NOT_FOUND, NOT_FOUND_MESSAGE, exception, request);
     }
 
     @ExceptionHandler(ThreadBotNotFoundException.class)
@@ -53,7 +57,15 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
             ThreadBotNotFoundException exception,
             ServletServerHttpRequest request
     ) {
-        return createResponseError(HttpStatus.NOT_FOUND, "Not found", exception, request);
+        return createResponseError(HttpStatus.NOT_FOUND, NOT_FOUND_MESSAGE, exception, request);
+    }
+
+    @ExceptionHandler(OpenAiHttpException.class)
+    public ResponseEntity<StandardErrorResponse> throwOpenAiException(
+            OpenAiHttpException exception,
+            ServletServerHttpRequest request
+    ) {
+        return createResponseError(HttpStatus.BAD_GATEWAY, BAD_GATEWAY_MESSAGE, exception, request);
     }
 
     private ResponseEntity<StandardErrorResponse> createResponseError(
